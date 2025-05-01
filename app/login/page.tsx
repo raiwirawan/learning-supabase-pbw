@@ -54,7 +54,11 @@ export default function Login() {
 							className="flex items-start justify-start flex-col my-6"
 							onSubmit={handleSubmit}
 						>
-							{error && <div>{error}</div>}
+							{error && (
+								<div className="py-2 px-5 bg-amber-300 text-white w-full flex items-center justify-start rounded-lg">
+									{error}
+								</div>
+							)}
 
 							<div className="flex items-start justify-start flex-col w-full my-1">
 								<label

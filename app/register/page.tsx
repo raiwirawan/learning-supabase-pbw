@@ -57,7 +57,9 @@ export default function Register() {
 							className="flex items-start justify-start flex-col my-6"
 							onSubmit={handleSubmit}
 						>
-							{error && <div>{error}</div>}
+							{error && (
+								<div className="py-4 bg-amber-300 text-white">{error}</div>
+							)}
 
 							<div className="flex items-start justify-start flex-col w-full my-1">
 								<label

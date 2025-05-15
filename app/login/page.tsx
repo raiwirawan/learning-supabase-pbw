@@ -25,10 +25,8 @@ export default function Login() {
 
 			if (error) {
 				throw error;
-			}
-
-			if (data.user) {
-				router.push("/");
+			}			if (data.user) {
+				router.push("/dashboard");
 			}
 		} catch (error: unknown) {
 			setError(

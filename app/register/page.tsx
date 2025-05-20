@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { setUserCookie } from "@/lib/cookies";
 
 export default function Register() {
 	const router = useRouter();
@@ -28,6 +29,30 @@ export default function Register() {
 			}
 
 			if (data.user) {
+				const { user } = data;
+				const { data: profile, error: profileError } = await supabase
+					.from("profiles")
+					.select("id, email, role")
+					.eq("id", user.id)
+					.single();
+				if (!profile && !profileError) {
+					await supabase.from("profiles").insert({
+						id: user.id,
+						email: user.email ?? "",
+						role: "viewer",
+					});
+					setUserCookie({
+						id: user.id,
+						email: user.email ?? "",
+						role: "viewer",
+					});
+				} else if (profile) {
+					setUserCookie({
+						id: profile.id,
+						email: profile.email ?? "",
+						role: profile.role,
+					});
+				}
 				alert(
 					"Registration successful! Please check your email for verification."
 				);
